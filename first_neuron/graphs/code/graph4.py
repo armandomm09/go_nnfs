@@ -8,7 +8,7 @@ layer_neurons_x = [3, 3, 3]
 layer_neurons_y = [1.5, 2.5, 3.5]
 
 # Outputs
-outputs = [2.3, -1.16, 0.52]  # Replace these with the actual output values
+outputs = [4.8, 1.2099999, 2.385]  # Replace these with the actual output values
 output_labels = [f'Output {o:.2f}' for o in outputs]
 
 # Create a figure

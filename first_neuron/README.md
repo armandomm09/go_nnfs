@@ -224,4 +224,67 @@ Then we can see all these 3 results as a list:
 </center>
 
 
+https://nnfs.io/mxo/
 
+### Standarizing the code
+
+In this code, we have three sets of weights and three biases, defining three neurons. Each neuron is "connected" to the same inputs, but the distinction lies in the individual weights and bias that each neuron applies to the input. This structure is referred to as a fully connected neural network, where every neuron in the current layer has connections to every neuron in the previous layer. While this is a common type of neural network, it's worth noting that there is no strict requirement for everything to be fully connected in this manner. So far, we have only demonstrated code for a single layer with a limited number of neurons. Visualizing code for many more layers and neurons would quickly become complex using our current approach. Instead, we could implement a loop to scale and manage dynamically sized inputs and layers. We’ve converted the individual weight variables into a list of weights, allowing us to iterate over them, and we modified the code to use loops instead of hardcoded operations.
+
+``` go
+package main
+
+import "fmt"
+
+func main() {
+	// Define the inputs to the neurons
+	inputs := []float32{1, 2, 3, 2.5}
+
+	// Define weights for each neuron, with each inner slice representing the weights for one neuron
+	weights := [][]float32{
+		{0.2, 0.8, -0.5, 1.0},   // Weights for Neuron 1
+		{0.5, -0.91, 0.26, -0.5}, // Weights for Neuron 2
+		{-0.26, -0.27, 0.17, 0.87}, // Weights for Neuron 3
+	}
+
+	// Define biases for each neuron
+	biases := []float32{2, 3, 0.5}
+
+	// Create a slice to hold the outputs from each neuron
+	outputs := make([]float32, 3)
+
+	// Iterate over each set of weights (and corresponding bias) for the neurons
+	for i := range weights {
+		// Get the weights and bias for the current neuron
+		neuronWeights := weights[i]
+		neuronB := biases[i]
+
+		// Initialize the output for the current neuron
+		var neuronOut float32
+
+		// Calculate the weighted sum of inputs for the current neuron
+		for j := range neuronWeights {
+			neuronOut += neuronWeights[j] * inputs[j] // Multiply each weight by its corresponding input and sum
+		}
+
+		// Add the bias to the weighted sum
+		neuronOut += neuronB
+
+		// Store the output of the current neuron
+		outputs[i] = neuronOut
+	}
+
+	// Print the outputs from all neurons
+	fmt.Println(outputs)
+}
+
+```
+
+```
+>>> [4.8 1.2099999 2.385]
+```
+
+### NICEE!!!
+
+This approach accomplishes the same goal as before but in a more dynamic and scalable manner. If you find any part of the process confusing, feel free to use print() to output the objects and better understand what they are and what’s happening.
+
+So, how do we determine that we have three neurons? The answer lies in the presence of three sets of weights and three biases. When you create your own neural network, you have the freedom to decide how many neurons to include in each layer. You can combine any number of inputs with as many neurons as you wish. As you progress through this book, you'll develop an intuition for the appropriate number of neurons to use. Initially, we'll work with small numbers of neurons to help you grasp the fundamental workings of neural networks.
