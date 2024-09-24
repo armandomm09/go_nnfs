@@ -25,7 +25,9 @@ Next, we need a bias. Since we are modeling a single neuron with three inputs, t
 
 Such that our NN will look something like:
 
-![alt text](graphs/nn3I.png)
+<center>
+<img src="graphs/imgs/graph1.png" alt="graph1" width="400">
+</center>
 
 ```
 Input      Weights      Weighted Sum   
@@ -83,3 +85,143 @@ You can visualize the entire process here:
 
 
 https://nnfs.io/bkr/
+
+
+### Add input
+
+If we now have 4 inputs instead of 3, we need to adjust the input list to include this additional input, and also add a corresponding weight. Each input has an associated weight, so for the new input, we'll create a new weight. Here's how the changes would look like:
+
+
+$$
+\text{output} = \left( 1 \times 0.2 + 2 \times 0.8 + 3 \times (-0.5) + 2.5 \times 1.0 \right)
+$$
+
+
+All together, our code would look something like this
+
+``` go
+
+    inputs := []float32{1, 2, 3, 2.5}
+	weights := []float32{0.2, 0.8, -0.5, 1.0}
+	var bias float32 = 2
+
+	output := (inputs[0]*weights[0] +
+		inputs[1]*weights[1] +
+		inputs[2]*weights[2] +
+		inputs[3]*weights[3])
+
+	output += bias
+
+	fmt.Println(output)
+```
+
+```go
+>>> 4.8
+```
+
+And finally we can visualize it as:
+
+<center>
+<img src="graphs/imgs/graph2.png" alt="graph2" width="400">
+</center>
+
+
+https://nnfs.io/djp/
+
+
+#### Pretty basic right? Just wait for it
+<br>
+
+### A Layer of Neurons
+
+In neural networks, layers are made up of multiple neurons working together. Each neuron in a layer receives the same input, which could be either the initial training data or the output from a previous layer. However, each neuron has its own distinct set of weights and bias, leading to a unique output for each one. The final output of the layer is a collection of the outputs from all its neurons, with one result per neuron. For example, imagine a layer with 3 neurons and 4 inputs.
+
+<center>
+<img src="graphs/imgs/graph3.png" alt="graph3" width="400">
+</center>
+
+We will continue using the same 4 inputs and sets of weights for the first neuron as before. To expand the layer, we'll introduce 2 additional sets of weights and biases for the new neurons, making a total of 3 neurons in the layer. Each neuron will have its own unique set of weights and biases, and the final output from this layer will be a list containing 3 final values, one for each neuron, rather than a single output like we had when we made just one neuron. This list represents the combined outputs from all the neurons in the layer.
+
+Lets see the code and for the moment we're going to skip the equation since it would only confuse us more.
+
+
+``` go
+
+package main
+
+import "fmt"
+
+func main() {
+	inputs := []float32{1, 2, 3, 2.5}
+
+	weights1 := []float32{0.2, 0.8, -0.5, 1.0}
+	weights2 := []float32{0.5, -0.91, 0.26, -0.5}
+	weights3 := []float32{-0.26, -0.27, 0.17, 0.87}
+
+	var bias1 float32 = 2
+	var bias2 float32 = 3
+	var bias3 float32 = 0.5
+```
+
+### First output
+$$
+\text{output}_1 = (1 \times 0.2) + (2 \times 0.8) + (3 \times (-0.5)) + (2.5 \times 1.0) + 2
+$$
+
+```go
+	output1 := (
+		inputs[0]*weights1[0] +
+		inputs[1]*weights1[1] +
+		inputs[2]*weights1[2] +
+		inputs[3]*weights1[3] + bias1)
+```
+
+### Second output
+$$
+\text{output}_2 = (1 \times 0.5) + (2 \times (-0.91)) + (3 \times 0.26) + (2.5 \times (-0.5)) + 3
+$$
+
+```go
+
+	output2 := (
+		inputs[0]*weights2[0] +
+		inputs[1]*weights2[1] +
+		inputs[2]*weights2[2] +
+		inputs[3]*weights2[3] + bias2)
+```
+
+### Third output
+$$
+\text{output}_3 = (1 \times (-0.26)) + (2 \times (-0.27)) + (3 \times 0.17) + (2.5 \times 0.87) + 0.5
+$$
+
+
+```go
+
+	output3 := (
+		inputs[0]*weights3[0] +
+		inputs[1]*weights3[1] +
+		inputs[2]*weights3[2] +
+		inputs[3]*weights3[3] + bias3)
+
+
+```
+### Results
+Then we can see all these 3 results as a list:
+
+```go
+    finalOutput := []float32{output1, output2, output3}
+
+	fmt.Println(finalOutput)
+```
+
+```
+>>> [4.8 1.2099999 2.385]
+```
+
+<center>
+<img src="graphs/imgs/graph4.png" alt="graph4" width="400">
+</center>
+
+
+
