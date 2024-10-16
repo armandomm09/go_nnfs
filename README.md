@@ -1,7 +1,7 @@
 # Neural Network From Scratch (NNFS) Repository
 
 ## Overview
-This repository is designed as a comprehensive guide for learning how to build neural networks from scratch, following the principles outlined in the book "Neural Networks from Scratch" (NNFS). Whether you are a beginner or someone with prior experience, this repo aims to provide a solid foundation in understanding neural networks and their implementations.
+This repository is designed as a comprehensive guide for learning how to build neural networks from scratch, following the principles outlined in the book "Neural Networks from Scratch" (NNFS). Whether you are a beginner or someone with prior experience, this repository aims to provide a solid foundation in understanding neural networks and their implementations.
 
 ## Purpose
 The primary goal of this repository is to help learners:
